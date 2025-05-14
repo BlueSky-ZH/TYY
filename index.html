@@ -19,7 +19,7 @@
             color: white;
         }
         .lottery-container {
-            width: 600px;
+            width: 700px;
             margin: 50px auto;
             text-align: center;
         }
@@ -33,7 +33,7 @@
         .prize-item {
             width: 150px;
             height: 100px;
-            margin: 0 15px;
+            margin: 0 10px;
             position: relative;
             transform-style: preserve-3d;
             perspective: 1000px;
@@ -47,10 +47,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2em;
+            font-size: 1.1em;
             font-weight: bold;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            text-align: center;
+            padding: 10px;
         }
         .prize-front {
             background: rgba(0,0,0,0.5);
@@ -58,6 +60,12 @@
         }
         .prize-back {
             transform: rotateY(180deg);
+        }
+        /* 奖品背面颜色 */
+        .prize-back[data-prize="steak"] { 
+            background: rgba(0,0,0,0.3); 
+            color: #FF6347; 
+            border: 2px solid #FF6347; 
         }
         .prize-back[data-prize="thanks"] { 
             background: rgba(0,0,0,0.3); 
@@ -75,7 +83,7 @@
         
         .selector {
             position: absolute;
-            width: 180px;
+            width: 170px;
             height: 120px;
             border: 3px solid gold;
             border-radius: 15px;
@@ -189,9 +197,13 @@
 </head>
 <body>
     <div class="lottery-container">
-        <h1 style="color: #FFD700; margin-bottom: 30px;">✨ 专属于佳欣的夺宝 ✨</h1>
+        <h1 style="color: #FFD700; margin-bottom: 30px;">✨ 翻转夺宝 ✨</h1>
         
         <div class="prize-track">
+            <div class="prize-item">
+                <div class="prize-face prize-front">?</div>
+                <div class="prize-face prize-back" data-prize="steak">佳欣请宝贝吃牛排</div>
+            </div>
             <div class="prize-item">
                 <div class="prize-face prize-front">?</div>
                 <div class="prize-face prize-back" data-prize="thanks">谢谢惠顾</div>
@@ -222,6 +234,14 @@
     <script>
         // 奖品配置
         const prizes = {
+            steak: { 
+                name: '佳欣请宝贝吃牛排', 
+                color: '#FF6347',
+                modal: {
+                    title: '恭喜你',
+                    message: '获得牛排大餐一顿！'
+                }
+            },
             thanks: { 
                 name: '谢谢惠顾', 
                 color: '#808080',
@@ -241,7 +261,7 @@
         };
 
         // 固定抽奖顺序（3次）
-        const prizeSequence = ['thanks', 'thanks', 'projector'];
+        const prizeSequence = ['steak', 'thanks', 'projector'];
 
         const selector = document.getElementById('selector');
         const spinBtn = document.getElementById('spinBtn');
@@ -253,7 +273,7 @@
         const modalMessage = document.getElementById('modalMessage');
         const modalBtn = document.getElementById('modalBtn');
         
-        const itemWidth = 150 + 30;
+        const itemWidth = 150 + 20;
         let currentRound = 0;
         let remainingAttempts = 3;
         let isAnimating = false;
